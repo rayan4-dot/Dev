@@ -1,17 +1,25 @@
 <?php
-// Include the Database class
-include_once('/Applications/XAMPP/xamppfiles/htdocs/Dev-Blog/app/config/database.php');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Get the database connection
-$db = Database::con();
 
-// Query the database to get the articles
-$sql = "SELECT * FROM articles";  // Assuming your articles are stored in an 'articles' table
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);  // Fetch all articles
+include_once __DIR__ . '/../config/database.php'; 
+
+
+include_once __DIR__ . '/../class/article/article.php';
+
+
+$database = new Database();
+
+
+$db = $database->getConnection();
+
+
+$article = new Article($db);
+
+
+$articles = $article->getAllArticles();
 ?>
-
 
 
 <!DOCTYPE html>
@@ -44,53 +52,58 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);  // Fetch all articles
       <div class="p-4 text-sm text-center">&copy; 2025 Dev-Blog</div>
     </aside>
 
-    <!-- Main Content -->
+
     <main class="flex-1 p-6">
       <div class="bg-white shadow-md rounded-lg p-4">
         <h1 class="text-2xl font-semibold mb-4">Manage Articles</h1>
         <div class="flex justify-between items-center mb-4">
-        <a href="../class/article_add.php">
-
-  <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-    Add Article
-  </button>
-</a>
-
-          <input
-            type="text"
-            placeholder="Search articles..."
-            class="border border-gray-300 rounded px-4 py-2"
-          />
+          <a href="../class/article/add.php">
+            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Article</button>
+          </a>
+          <input type="text" placeholder="Search articles..." class="border border-gray-300 rounded px-4 py-2" />
         </div>
-        <table class="w-full border border-gray-300 bg-white rounded shadow-md">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Title</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Category</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Tags</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($articles as $article): ?>
+
+
+        <?php if (empty($articles)): ?>
+          <p>No articles found.</p>
+        <?php else: ?>
+          <table class="w-full border border-gray-300 bg-white rounded shadow-md">
+            <thead class="bg-gray-100">
               <tr>
-                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['id']); ?></td>
-                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['title']); ?></td>
-                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['category']); ?></td>
-                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['tags']); ?></td>
-                <td class="border border-gray-300 px-4 py-2">
-                  <a href="edit_article.php?id=<?php echo htmlspecialchars($article['id']); ?>">
-                    <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
-                  </a>
-                  <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
-                </td>
+                <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Title</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Category</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Tags</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
               </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <?php foreach ($articles as $article): ?>
+                <tr>
+                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['id']); ?></td>
+                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['title']); ?></td>
+                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['category_name']); ?></td>
+                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['tags']); ?></td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    <a href="../class/article/edit.php?id=<?php echo htmlspecialchars($article['id']); ?>">
+                      <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
+                    </a>
+                    <button onclick="deleteArticle(<?php echo htmlspecialchars($article['id']); ?>)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
       </div>
     </main>
   </div>
+  <script>
+    function deleteArticle(id) {
+      if (confirm('Are you sure you want to delete this article?')) {
+        window.location.href = `delete_article.php?id=${id}`;
+      }
+    }
+  </script>
 </body>
 </html>

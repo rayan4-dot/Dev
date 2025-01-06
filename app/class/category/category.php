@@ -1,46 +1,38 @@
 <?php
 
-namespace Classes;
+namespace App\Class\Category;
 
-class Category 
-{
-    private  $dbHandler;
-    private static $nbrOfCategories = 0;
-    private $table = 'categories';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-    function __construct(BaseModel $dbHandler) {
-        var_dump($dbHandler);
-        $this->dbHandler = $dbHandler;
+use App\Class\Crud\Crud;
+
+class Category extends Crud {
+    private $conn;
+    private $table = "categories";
+
+    public $id;
+    public $name;
+
+    public function __construct($db) {
+        $this->conn = $db;
     }
 
-    public function createCategory(string $name) : void
-    {
-        $this->dbHandler->insertRecord($this->table, ['name' => $name]);
-        self::$nbrOfCategories++;
+
+
+    public function deleteCategory($id) {
+        $this->deleteRecord($id);
     }
 
-    public function deleteCategory(int $id) : void
-    {
-        $this->dbHandler->deleteRecord($this->table, $id);
-        self::$nbrOfCategories--;
+    public function insertCategory($data){
+        $this->insertRecord($this->table, $data);
     }
 
-    public function updateCategory(int $id, string $name) : void 
-    {
-        $this->dbHandler->updateRecord($this->table, ['name' => $name], $id);
+    public function update($data, $id){
+        $this->updateRecord($this->table, $data, $id);
     }
 
-    public function getAllCategories() : array
-    {
-        $result = $this->dbHandler->selectRecords($this->table);
-        if(!$result) {
-            return [];
-        }
-        return $result;
+    public function getAllCat(){
+        $this->selectRecords($this->table);
     }
-
-    public static function getTotalNumberOfCategories() : int
-    {
-        return self::$nbrOfCategories;
-    }
+    
 }

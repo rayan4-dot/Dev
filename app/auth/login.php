@@ -1,21 +1,21 @@
 <?php
-// Enable error reporting for debugging
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../config/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get input data
+
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
     try {
-        // Get the database connection
+
         $conn = Database::con();
 
         if ($conn) {
-            // Check if the user exists
+            // check if the user exists
             $sql = "SELECT * FROM users WHERE email = :email";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':email', $email);
@@ -23,13 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password_hash'])) {
-                // If user exists and password is correct, start session and redirect
+
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['email'] = $user['email'];
 
-                // Redirect to d.php
+
                 header("Location: ../front-end/d.php");
                 exit;
             } else {

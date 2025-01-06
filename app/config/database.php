@@ -1,26 +1,23 @@
- 
 <?php
 
 class Database {
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "blog"; 
+    private $conn;
 
-    private static $host = "localhost";
-    private static $user = "root";
-    private static $password = "";
-    private static $database = "blog";
-    private static $connection;
-
-    public static function con() {
+    public function __construct() {
         try {
-            self::$connection = new PDO("mysql:host=". self::$host . ";dbname=".self::$database, self::$user, self::$password);
-
-            self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return self::$connection;
-        } catch (PDOException $e) {
-            
+            $this->conn = new PDO("mysql:host={$this->servername};dbname={$this->dbname}", $this->username, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
-            return null;
         }
+    }
 
-        return self::$connection;
+    // Corrected method name to getConnection
+    public function getConnection() {
+        return $this->conn;
     }
 }

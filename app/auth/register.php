@@ -6,20 +6,20 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../config/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and get input data
+
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Password hashing
+
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        // Get the database connection
+
         $conn = Database::con();
 
         if ($conn) {
-            // Check if username or email already exists in the database
+
             $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':username', $username);
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 $error_message = "Le nom d'utilisateur ou l'email est déjà pris.";
             } else {
-                // Insert user data into the users table
+
                 $sql = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':username', $username);
