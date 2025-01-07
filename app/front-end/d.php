@@ -1,12 +1,12 @@
 <?php
-  session_start(); 
+//   session_start(); 
 
 
-  if (!isset($_SESSION['username'])) {
+//   if (!isset($_SESSION['username'])) {
 
-      header("Location: login.php");
-      exit;
-  }
+//       header("Location: login.php");
+//       exit;
+//   }
   ?>
 
 <!DOCTYPE html>
@@ -131,17 +131,17 @@
     </script>
 
     <?php
-    // Handle logout
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
-        // Unset all session variables
-        session_start(); // Make sure session is started before unsetting
-        session_unset(); // Unset all session variables
-        session_destroy(); // Destroy the session
+    // // Handle logout
+    // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
+    //     // Unset all session variables
+    //     session_start(); // Make sure session is started before unsetting
+    //     session_unset(); // Unset all session variables
+    //     session_destroy(); // Destroy the session
 
-        // Redirect to the login page
-        header("Location: /Dev-Blog/app/auth/login.php"); 
-        exit;
-    }
+    //     // Redirect to the login page
+    //     header("Location: /Dev-Blog/app/auth/login.php"); 
+    //     exit;
+    // }
     ?>
 </body>
 </html>

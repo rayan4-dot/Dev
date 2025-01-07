@@ -3,42 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 
-require_once __DIR__ . '/../config/database.php'; 
-require_once __DIR__ . '/../class/category/category.php'; 
+require_once '../class/category/category.php'; 
+require_once '../handler/c.php';
 
-
-use App\Class\Category\Category;
-
-$database = new Database();
-$db = $database->getConnection();
-
-$category = new  Category($db);
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryName'])) {
-    $category->name = $_POST['categoryName'];
-
-    if ($category->createCateogry(['name' => $category->name])) {
-        header("Location: category.php"); 
-        exit();
-    }
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $category->id = $_POST['id'];
-
-
-    if ($category->deleteCategory($category->id)) {
-        header("Location: category.php"); 
-        exit();
-    } else {
-        echo "<script>alert('Failed to delete category.'); window.location.href='category.php';</script>";
-    }
-}
-
-
-// $categories = $category->getAllCat();
 ?>
 
 <!DOCTYPE html>
@@ -101,17 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <?php foreach ($categories as $category): ?> -->
+                        <?php foreach ($categories as $category): ?>
                             <tr>
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['id']); ?></td>
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['name']); ?></td>
                                 <td class="border border-gray-300 px-4 py-2">
-
                                     <form action="/app/class/category/update.php" method="GET" style="display:inline;">
                                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($category['id']); ?>">
                                         <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
                                     </form>
-
 
                                     <form action="category.php" method="POST" style="display:inline;">
                                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($category['id']); ?>">

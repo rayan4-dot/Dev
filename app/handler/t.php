@@ -1,6 +1,5 @@
 <?php 
-// require_once __DIR__ . '/../class/tags/Tag.php';
-// require_once __DIR__ . '/../config/database.php';  // Use require_once to avoid multiple inclusions
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 
@@ -12,14 +11,7 @@ use App\class\Tag;
 $database = new Database();
 $db = $database->getConnection();
 
-
-// use App\Class\Tag\Tag; 
-
-
 $tag = new Tag($db);
-
-
-
 $tags = $tag->display();
 
 

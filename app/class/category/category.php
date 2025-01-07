@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Class\Category;
+namespace App\Class;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
@@ -17,22 +17,19 @@ class Category extends Crud {
         $this->conn = $db;
     }
 
-
-
     public function deleteCategory($id) {
-        $this->deleteRecord($id);
+        return $this->deleteRecord($this->table, $id);  // Pass table name and ID
     }
 
-    public function insertCategory($data){
-        $this->insertRecord($this->table, $data);
+    public function insertCategory($data) {
+        return $this->insertRecord($this->table, $data);  // Insert data into the table
     }
 
-    public function update($data, $id){
-        $this->updateRecord($this->table, $data, $id);
+    public function update($data, $id) {
+        return $this->updateRecord($this->table, $data, $id);  // Update record in the table
     }
 
-    public function getAllCat(){
-        $this->selectRecords($this->table);
+    public function getAllCat() {
+        return $this->selectRecords($this->table);  // Fetch all categories from the table
     }
-    
 }

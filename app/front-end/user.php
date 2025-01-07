@@ -1,14 +1,14 @@
 <?php
-  session_start(); 
+  // session_start(); 
 
 
-  if (!isset($_SESSION['username'])) {
+  // if (!isset($_SESSION['username'])) {
 
-      header("Location: login.php");
-      exit;
-  }
+  //     header("Location: login.php");
+  //     exit;
+  // }
 
-  $username = $_SESSION['username']; 
+  // $username = $_SESSION['username']; 
   ?>
 
   <!DOCTYPE html>
@@ -52,15 +52,15 @@
 
     <?php
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
-      session_start(); 
-      session_unset(); 
-      session_destroy(); 
+  // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
+  //     session_start(); 
+  //     session_unset(); 
+  //     session_destroy(); 
 
 
-      header("Location: /Dev-Blog/app/auth/login.php"); 
-      exit;
-  }
+  //     header("Location: /Dev-Blog/app/auth/login.php"); 
+  //     exit;
+  // }
   ?>
 
   </body>
