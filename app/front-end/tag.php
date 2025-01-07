@@ -46,7 +46,7 @@ require_once '../handler/t.php';
         <!-- Add Tag and Search Bar -->
         <div class="flex justify-between items-center mb-4">
           <form action="tag.php" method="POST">
-            <input type="text" name="name" placeholder="Enter tag name..." class="border border-gray-300 rounded px-4 py-2" required />
+            <input type="text" name="nameTag" placeholder="Enter tag name..." class="border border-gray-300 rounded px-4 py-2" required />
             <button type="submit" name="add_tag" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
               Add Tag
             </button>
