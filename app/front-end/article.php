@@ -2,23 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
-include_once __DIR__ . '/../config/database.php'; 
-
-
-include_once __DIR__ . '/../class/article/article.php';
+require_once '../class/article/article.php';
+require_once '../handler/a.php';
 
 
-$database = new Database();
-
-
-$db = $database->getConnection();
-
-
-$article = new Article($db);
-
-
-$articles = $article->getAllArticles();
 ?>
 
 
@@ -57,16 +44,14 @@ $articles = $article->getAllArticles();
       <div class="bg-white shadow-md rounded-lg p-4">
         <h1 class="text-2xl font-semibold mb-4">Manage Articles</h1>
         <div class="flex justify-between items-center mb-4">
-          <a href="../class/article/add.php">
+          <a href="../front-end/add.php">
             <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Article</button>
           </a>
           <input type="text" placeholder="Search articles..." class="border border-gray-300 rounded px-4 py-2" />
         </div>
 
 
-        <?php if (empty($articles)): ?>
-          <p>No articles found.</p>
-        <?php else: ?>
+
           <table class="w-full border border-gray-300 bg-white rounded shadow-md">
             <thead class="bg-gray-100">
               <tr>
@@ -77,33 +62,34 @@ $articles = $article->getAllArticles();
                 <th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
               </tr>
             </thead>
+            <tbody> 
+
             <tbody>
-              <?php foreach ($articles as $article): ?>
-                <tr>
-                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['id']); ?></td>
-                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['title']); ?></td>
-                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['category_name']); ?></td>
-                  <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['tags']); ?></td>
-                  <td class="border border-gray-300 px-4 py-2">
-                    <a href="../class/article/edit.php?id=<?php echo htmlspecialchars($article['id']); ?>">
-                      <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
-                    </a>
-                    <button onclick="deleteArticle(<?php echo htmlspecialchars($article['id']); ?>)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
+  <?php if (!empty($articles)): ?>
+    <?php foreach ($articles as $article): ?>
+      <tr>
+        <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['id']); ?></td>
+        <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['title']); ?></td>
+        <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['category_name']); ?></td>
+        <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($article['tags']); ?></td>
+        <td class="border border-gray-300 px-4 py-2">
+          <a href="../class/article/edit.php?id=<?php echo htmlspecialchars($article['id']); ?>">
+            <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
+          </a>
+          <form action="../class/article/delete.php" method="post" style="display: inline;">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($article['id']); ?>">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this article?');" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+  <?php endif; ?>
+</tbody>
+
           </table>
-        <?php endif; ?>
       </div>
     </main>
   </div>
-  <script>
-    function deleteArticle(id) {
-      if (confirm('Are you sure you want to delete this article?')) {
-        window.location.href = `delete_article.php?id=${id}`;
-      }
-    }
-  </script>
+
 </body>
 </html>
