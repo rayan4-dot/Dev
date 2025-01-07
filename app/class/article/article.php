@@ -1,7 +1,16 @@
 <?php
 
-class Article {
-    private $db;
+namespace App\Class\Article;
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use App\Class\Crud\Crud;
+
+
+class Article extends Crud {
+
+    private $conn;
+    private $table = "articles"; 
 
 
     public function __construct($db) {

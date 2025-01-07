@@ -1,45 +1,11 @@
 <?php
-
-require_once '../config/database.php';
-require_once '../class/tags/Tag.php'; 
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once '../class/tags/Tag.php'; 
+require_once '../handler/t.php';
 
 
-$database = new Database();
-$db = $database->getConnection();
-
-
-$tag = new Tag($db);
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
-    $tag->name = $_POST['name'];
-
-
-    if ($tag->insert()) {
-        echo "<script>alert('Tag added successfully!');</script>";
-    } else {
-        echo "<script>alert('Failed to add tag.');</script>";
-    }
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete_id'])) {
-    $tag->id = $_GET['delete_id'];
-
-
-    if ($tag->delete()) {
-        echo "<script>alert('Tag deleted successfully!');</script>";
-    } else {
-        echo "<script>alert('Failed to delete tag.');</script>";
-    }
-}
-
-
-$tags = $tag->display();
 ?>
 
 <!DOCTYPE html>

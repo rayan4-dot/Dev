@@ -7,6 +7,8 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../class/category/category.php'; 
 
 
+use App\Class\Category\Category;
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -16,7 +18,7 @@ $category = new  Category($db);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryName'])) {
     $category->name = $_POST['categoryName'];
 
-    if ($category->create()) {
+    if ($category->createCateogry(['name' => $category->name])) {
         header("Location: category.php"); 
         exit();
     }
@@ -27,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $category->id = $_POST['id'];
 
 
-    if ($category->delete()) {
+    if ($category->deleteCategory($category->id)) {
         header("Location: category.php"); 
         exit();
     } else {
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 }
 
 
-$categories = $category->readAll();
+// $categories = $category->getAllCat();
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +101,7 @@ $categories = $category->readAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($categories as $category): ?>
+                        <!-- <?php foreach ($categories as $category): ?> -->
                             <tr>
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['id']); ?></td>
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['name']); ?></td>
