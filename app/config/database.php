@@ -16,7 +16,7 @@ class Database {
         }
     }
 
-    // Corrected method name to getConnection
+
     public function getConnection() {
         return $this->conn;
     }
