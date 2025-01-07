@@ -3,19 +3,21 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 
-require_once '../class/category/category.php'; 
+require_once '../class/category/category.php';
 require_once '../handler/c.php';
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 h-screen">
     <div class="flex h-full">
         <!-- Sidebar -->
@@ -49,15 +51,13 @@ require_once '../handler/c.php';
                             name="categoryName"
                             placeholder="Enter category name"
                             class="border border-gray-300 rounded px-4 py-2"
-                            required
-                        />
+                            required />
                         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Category</button>
                     </form>
                     <input
                         type="text"
                         placeholder="Search categories..."
-                        class="border border-gray-300 rounded px-4 py-2"
-                    />
+                        class="border border-gray-300 rounded px-4 py-2" />
                 </div>
                 <table class="w-full border border-gray-300 bg-white rounded shadow-md">
                     <thead class="bg-gray-100">
@@ -73,9 +73,9 @@ require_once '../handler/c.php';
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['id']); ?></td>
                                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category['name']); ?></td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <form action="/app/class/category/update.php" method="GET" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($category['id']); ?>">
-                                        <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
+                                    <form action="updateCategory.php" method="GET" style="display:inline;">
+                                        <a href="updateCategory.php?id=<?php echo htmlspecialchars($category['id']); ?>" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
+
                                     </form>
 
                                     <form action="category.php" method="POST" style="display:inline;">
@@ -91,4 +91,5 @@ require_once '../handler/c.php';
         </main>
     </div>
 </body>
+
 </html>
