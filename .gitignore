@@ -1,1 +1,7 @@
 /vendor/
+
+*.DS_STORE
+
+app/.DS_STORE
+
+app/class/.DS_STORE
