@@ -8,7 +8,7 @@ use App\Config\Database;
 
 class Crud extends Database
 {
-    public function insertRecord(string $table, array $data): int
+    public function insertRecord(string $table, array $data)
     {
         $columns = implode(',', array_keys($data));
         $placeholders = implode(',', array_fill(0, count($data), '?'));
@@ -31,7 +31,7 @@ class Crud extends Database
         }
     }
 
-    public function selectRecords(string $table, string $columns = '*', string $where = null): array|bool
+    public function selectRecords(string $table, string $columns = '*', string $where = null)
     {
         $sql = "SELECT $columns FROM $table";
 
@@ -60,7 +60,7 @@ class Crud extends Database
     }
 
     
-    public function updateRecord(string $table, array $data, int $id) : bool
+    public function updateRecord(string $table, array $data, int $id)
     {
 
         $args = [];
@@ -87,7 +87,7 @@ class Crud extends Database
     }
 
     
-    public function deleteRecord(string $table, int $id, string $column = 'id') : bool
+    public function deleteRecord(string $table, int $id, string $column = 'id')
     {
         $sql = "DELETE FROM $table WHERE $column = ?";
 
