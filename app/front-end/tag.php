@@ -25,14 +25,14 @@ require_once '../handler/t.php';
       <div class="p-4 text-xl font-bold">Admin</div>
       <nav class="flex-1">
         <ul class="space-y-2">
-          <li><a href="d.php" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
-          <li><a href="user.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
+        <li><a href="dashboard.php" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
+        <li><a href="user.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
           <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
           <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Tag</a></li>
           <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Article</a></li>
         </ul>
       </nav>
-      <form action="d.php" method="POST">
+      <form action="" method="POST">
         <button type="submit" name="logout" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Logout</button>
       </form>
       <div class="p-4 text-sm text-center">&copy; 2025 Dev-Blog</div>
@@ -69,7 +69,7 @@ require_once '../handler/t.php';
                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($tagItem['id']); ?></td>
                 <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($tagItem['name']); ?></td>
                 <td class="border border-gray-300 px-4 py-2">
-                  <a href="update.php?id=<?php echo htmlspecialchars($tagItem['id']); ?>">
+                  <a href="updateTag.php?id=<?php echo htmlspecialchars($tagItem['id']); ?>">
                     <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
                   </a>
                   <a href="tag.php?delete_id=<?php echo htmlspecialchars($tagItem['id']); ?>" onclick="return confirm('Are you sure you want to delete this tag?');">
