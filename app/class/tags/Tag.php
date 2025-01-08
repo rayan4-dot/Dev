@@ -2,7 +2,7 @@
 
 
 
-namespace App\Class;
+namespace App\Class\Tags;
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Class\Crud\Crud;
