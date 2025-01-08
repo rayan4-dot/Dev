@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
 
-        $conn = Database::con();
+        // $conn = Database::con();
 
         if ($conn) {
             // check if the user exists
