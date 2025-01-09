@@ -25,7 +25,7 @@ try {
         $updateStmt->bindParam(':id', $userId);
         $updateStmt->execute();
         
-        header("Location: userTrack.php"); // Refresh the page after the update
+        header("Location: userTrack.php"); 
         exit;
     }
 
