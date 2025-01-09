@@ -26,7 +26,7 @@ require_once '../handler/t.php';
       <nav class="flex-1">
         <ul class="space-y-2">
         <li><a href="dashboard.php" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
-        <li><a href="user.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
+        <li><a href="userTrack.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
           <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
           <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Tag</a></li>
           <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Article</a></li>

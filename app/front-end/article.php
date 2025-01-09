@@ -24,8 +24,8 @@ require_once '../handler/a.php';
       <div class="p-4 text-xl font-bold">Admin</div>
       <nav class="flex-1">
         <ul class="space-y-2">
-          <li><a href="d.php" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
-          <li><a href="user.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
+          <li><a href="dashboard.php" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
+          <li><a href="userTrack.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
           <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
           <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700">Tag</a></li>
           <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Article</a></li>
@@ -44,7 +44,7 @@ require_once '../handler/a.php';
       <div class="bg-white shadow-md rounded-lg p-4">
         <h1 class="text-2xl font-semibold mb-4">Manage Articles</h1>
         <div class="flex justify-between items-center mb-4">
-          <a href="../front-end/add.php">
+          <a href="../front-end/addArticle.php">
             <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Article</button>
           </a>
           <input type="text" placeholder="Search articles..." class="border border-gray-300 rounded px-4 py-2" />
@@ -76,7 +76,7 @@ require_once '../handler/a.php';
           <a href="../class/article/edit.php?id=<?php echo htmlspecialchars($article['id']); ?>">
             <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
           </a>
-          <form action="../class/article/delete.php" method="post" style="display: inline;">
+          <form action="" method="post" style="display: inline;">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($article['id']); ?>">
             <button type="submit" onclick="return confirm('Are you sure you want to delete this article?');" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
           </form>

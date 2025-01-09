@@ -1,32 +1,25 @@
 <?php
 
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+use App\Config\Database;
+
 require_once __DIR__ . '/../../config/database.php';
 
-
 require_once __DIR__ . '/../tags/Tag.php';
-
-
 require_once __DIR__ . '/../category/category.php';
-
-
 require_once __DIR__ . '/article.php';
-
 
 $database = new Database();
 $db = $database->getConnection();
 
+// $category = new Category($db);
+// $categories = $category->readAll();
 
-$category = new Category($db);
-$categories = $category->readAll();
-
-$tag = new Tag($db);
-$tags = $tag->display();
-
+// $tag = new Tag($db);
+// $tags = $tag->display();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -36,19 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['category'];
     $tags = isset($_POST['tags']) ? $_POST['tags'] : []; 
 
-
-    $article = new Article($db);
-    $article->create($title, $slug, $content, $category_id, $tags); 
-
-
-    if ($article) {
-        header("Location: ../../front-end/article.php");
-        exit();
-    } else {
-        echo "<script>alert('Failed to add article. Please try again.');</script>";
-    }
 }
-
 ?>
 
 <!DOCTYPE html>
