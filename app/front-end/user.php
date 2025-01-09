@@ -38,7 +38,6 @@ $username = $_SESSION['username'];
 
             </div>
 
-
         </main>
     </div>
 
