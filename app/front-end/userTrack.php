@@ -14,7 +14,7 @@ try {
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Handle role update
+    // andle role update
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_role'])) {
         $userId = $_POST['user_id'];
         $newRole = $_POST['role'];
@@ -38,7 +38,7 @@ try {
         $deleteStmt->bindParam(':id', $userId);
         $deleteStmt->execute();
 
-        header("Location: userTrack.php"); // Refresh the page after deletion
+        header("Location: userTrack.php"); 
         exit;
     }
 } catch (PDOException $e) {
