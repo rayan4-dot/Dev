@@ -3,6 +3,7 @@ session_start();
 
 
 $username = $_SESSION['username'];
+
 ?>
 
 <!DOCTYPE html>
@@ -29,20 +30,20 @@ $username = $_SESSION['username'];
             <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
         </aside>
 
-        <!-- Main Content -->
+
         <main class="flex-1 p-6">
-            <!-- Welcome Section -->
+
             <div class="bg-white shadow-md rounded-lg p-4 mb-6">
                 <h2 class="text-2xl font-bold">Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
 
             </div>
 
-            <!-- Additional content can go here -->
+
         </main>
     </div>
 
     <script>
-        // Set current year in footer
+        // set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
