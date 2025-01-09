@@ -18,10 +18,6 @@ class Crud extends Database
         try {
             $stmt = $this->getConnection()->prepare($sql);
 
-            if (!$stmt) {
-                return 0;
-            }
-
             $stmt->execute(array_values($data));
 
             return (int)$this->getConnection()->lastInsertId();
