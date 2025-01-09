@@ -24,7 +24,7 @@ class Article extends Crud {
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute();
         $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        print_r($articles);
         foreach ($articles as &$article) {
             $article['tags'] = $this->getTagsForArticle($article['id']);
         }
@@ -37,7 +37,8 @@ class Article extends Crud {
             'title' => $title,
             'slug' => $slug,
             'content' => $content,
-            'category_id' => $category_id
+            'category_id' => $category_id,
+            
         ];
 
         $article_id = $this->insertRecord($this->table, $data);
@@ -79,11 +80,12 @@ class Article extends Crud {
         $stmt->bindParam(':tag_name', $tag_name);
         $stmt->execute();
         $tag = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         if ($tag) {
             return $tag['id'];
         }
-
+    
         return $this->insertRecord('tags', ['name' => $tag_name]);
     }
+    
 }

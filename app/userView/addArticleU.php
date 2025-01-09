@@ -1,19 +1,19 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
-use App\Config\Database;
+// error_reporting(E_ALL);
 
-require_once __DIR__ . '/../../config/database.php';
+// use App\Config\Database;
 
-require_once __DIR__ . '/../tags/Tag.php';
-require_once __DIR__ . '/../category/category.php';
-require_once __DIR__ . '/article.php';
+// require_once __DIR__ . '/../../config/database.php';
 
-$database = new Database();
-$db = $database->getConnection();
+// require_once __DIR__ . '/../tags/Tag.php';
+// require_once __DIR__ . '/../category/category.php';
+// require_once __DIR__ . '/article.php';
+
+// $database = new Database();
+// $db = $database->getConnection();
 
 // $category = new Category($db);
 // $categories = $category->readAll();
@@ -21,17 +21,17 @@ $db = $database->getConnection();
 // $tag = new Tag($db);
 // $tags = $tag->display();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $title = $_POST['title'];
-    $slug = $_POST['slug'];
-    $content = $_POST['content'];
-    $category_id = $_POST['category'];
-    $tags = isset($_POST['tags']) ? $_POST['tags'] : []; 
+//     $title = $_POST['title'];
+//     $slug = $_POST['slug'];
+//     $content = $_POST['content'];
+//     $category_id = $_POST['category'];
+//     $tags = isset($_POST['tags']) ? $_POST['tags'] : []; 
 
-}
+
 ?>
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gray-100">
   <div class="flex h-screen">
     <aside class="w-64 bg-blue-900 text-white">
-      <div class="p-4 text-xl font-bold">Admin Panel</div>
+      <div class="p-4 text-xl font-bold">User Panel</div>
       <nav>
         <ul>
-          <li><a href="../../front-end/article.php" class="block px-4 py-2 hover:bg-blue-700">Articles</a></li>
+          <li><a href="../userView/articleU.php" class="block px-4 py-2 hover:bg-blue-700">Articles</a></li>
         </ul>
       </nav>
     </aside>
@@ -83,9 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
           </div>
           <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Add Article</button>
+
+          <a href="../userView/articleU.php">    
+          <button class="bg-red-600 text-white px-4 py-2 rounded">Back</button>
+
+
         </form>
       </div>
     </main>
   </div>
 </body>
-</html>
+</html> -->
