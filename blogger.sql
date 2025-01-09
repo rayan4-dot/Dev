@@ -127,7 +127,7 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT for dumped table
 --
 
 --
