@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Config\Database;
-use App\class\Tag;
+use App\Class\Tags\Tag; 
 
 $database = new Database();
 $db = $database->getConnection();
