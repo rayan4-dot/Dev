@@ -1,4 +1,51 @@
 
+
+
+-- --------------------------------------------------------
+
+--
+
+
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+
+
+-- --------------------------------------------------------
+
+
+
+CREATE TABLE `categories` (
+  `id` bigint(20) NOT NULL,
+  `name` text NOT NULL
+) 
+
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `bio` text DEFAULT NULL,
+  `profile_picture_url` varchar(255) DEFAULT NULL,
+  `role` enum('user','author','admin') NOT NULL DEFAULT 'user'
+)--
+
+CREATE TABLE `tags` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL
+) 
+
+
+CREATE TABLE `article_tags` (
+  `article_id` bigint(20) UNSIGNED NOT NULL,
+  `tag_id` bigint(20) NOT NULL
+) 
+
 CREATE TABLE `articles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -14,39 +61,18 @@ CREATE TABLE `articles` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `views` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
+)
 
 
-CREATE TABLE `article_tags` (
-  `article_id` bigint(20) UNSIGNED NOT NULL,
-  `tag_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
+CREATE TABLE `users` (
   `id` bigint(20) NOT NULL,
-  `name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tags`
---
-
-CREATE TABLE `tags` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `username` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `bio` text DEFAULT NULL,
+  `profile_picture_url` varchar(255) DEFAULT NULL,
+  `role` enum('user','author','admin') NOT NULL DEFAULT 'user'
+)
 
 --
 -- Dumping data for table `tags`
@@ -61,15 +87,7 @@ INSERT INTO `tags` (`id`, `name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `bio` text DEFAULT NULL,
-  `profile_picture_url` varchar(255) DEFAULT NULL,
-  `role` enum('user','author','admin') NOT NULL DEFAULT 'user'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
