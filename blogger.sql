@@ -84,7 +84,7 @@ INSERT INTO `tags` (`id`, `name`) VALUES
 
 --
 -- Table structure for table `users`
---
+-
 
  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
