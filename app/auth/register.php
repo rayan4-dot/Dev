@@ -1,55 +1,71 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require_once __DIR__ . '/../config/database.php';
+use App\Config\Database;
+
+
+class User
+{
+    private $conn;
+
+    public function __construct($dbConnection)
+    {
+        $this->conn = $dbConnection;
+    }
+
+    public function isEmailOrUsernameTaken($username, $email)
+    {
+        $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function registerUser($username, $email, $passwordHash)
+    {
+        $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (:username, :email, :password_hash, :role)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password_hash', $passwordHash);
+        $stmt->bindValue(':role', 'user'); 
+        return $stmt->execute();
+    }
+}
+
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
-
-
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     try {
 
-        // $conn = Database::con();
+        $db = new Database();
+        $conn = $db->getConnection();
 
-        if ($conn) {
+        $user = new User($conn);
 
-            $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($result) {
-                $error_message = "Le nom d'utilisateur ou l'email est déjà pris.";
+        if ($user->isEmailOrUsernameTaken($username, $email)) {
+            $error_message = "email or username already taken";
+        } else {
+
+            if ($user->registerUser($username, $email, $password_hash)) {
+                $success_message = "Registered successfully";
             } else {
-
-                $sql = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':password_hash', $password_hash);
-
-                if ($stmt->execute()) {
-                    $success_message = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
-                } else {
-                    $error_message = "Erreur lors de l'inscription. Veuillez réessayer.";
-                }
+                $error_message = "Error, Try again.";
             }
         }
     } catch (PDOException $e) {
-        $error_message = "Erreur de connexion à la base de données: " . $e->getMessage();
+        $error_message = "Something went wrong connecting to database " . $e->getMessage();
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,37 +79,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 class="text-2xl font-bold text-center mb-6">S'inscrire</h2>
 
-        <?php if (isset($error_message)): ?>
+        <?php if ($error_message): ?>
             <div class="bg-red-500 text-white text-center p-2 mb-4 rounded">
-                <?php echo $error_message; ?>
+                <?php echo htmlspecialchars($error_message); ?>
             </div>
-        <?php elseif (isset($success_message)): ?>
+        <?php elseif ($success_message): ?>
             <div class="bg-green-500 text-white text-center p-2 mb-4 rounded">
-                <?php echo $success_message; ?>
+                <?php echo htmlspecialchars($success_message); ?>
             </div>
         <?php endif; ?>
 
         <form action="register.php" method="POST">
-
             <div class="mb-4">
                 <label for="username" class="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
-
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
                 <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
-
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
                 <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
-
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">S'inscrire</button>
         </form>
 
-        <p class="mt-4 text-sm text-center text-gray-600">Déjà un compte ? <a href="login.php" class="text-blue-500 hover:underline">Se connecter</a></p>
+        <p class="mt-4 text-sm text-center text-gray-600">Already registered? <a href="login.php" class="text-blue-500 hover:underline">Log In</a></p>
     </div>
 </body>
 </html>
