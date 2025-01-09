@@ -10,7 +10,7 @@ class Dashboard extends Crud {
 
     public function getTotalUsers() {
         $result = $this->selectRecords('users', 'COUNT(*) AS total');
-        // return $result ? [['total' => 0]] : null;
+        return $result ? $result[0]['total'] : 0;
     }       
 
     public function getTotalArticles() {
