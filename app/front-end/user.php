@@ -23,8 +23,8 @@ $username = $_SESSION['username'];
             <div class="p-4 text-xl font-bold">User Panel</div>
             <nav class="flex-1">
                 <ul class="space-y-2">
-                    <li><a href="../userView/articleU.php" class="block px-4 py-2 hover:bg-blue-700">Article</a></li>
-                    <li><a href="../userView/categoryU.php" class="block px-4 py-2 hover:bg-blue-700">read Article</a></li>
+                    <li><a href="../userView/articleU.php" class="block px-4 py-2 hover:bg-blue-700">Add Article</a></li>
+                    <li><a href="../userView/readArticle" class="block px-4 py-2 hover:bg-blue-700">View Article</a></li>
                 </ul>
             </nav>
             <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
