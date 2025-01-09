@@ -1,91 +1,91 @@
 <?php
-
 namespace App\Class\Article;
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+use App\Config\Database;
 
-use App\Class\Crud\Crud;
-use PDO;
+class Article
+{
+    private $conn;
 
-class Article extends Crud {
-    private $table = "articles";
+    public function __construct()
+    {
+        $this->conn = (new Database())->getConnection(); 
+    }
 
-    public $id;
-    public $name;
+    public function getAllArticles()
+    {
+        $sql = "SELECT * FROM articles WHERE status = 'published' ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
-    public function getAllArticles() {
+
+    public function getArticleById($id)
+    {
         $sql = "
-            SELECT a.*, c.name AS category_name, u.username AS author_name
-            FROM articles a
-            JOIN categories c ON a.category_id = c.id
-            JOIN users u ON a.author_id = u.id
+            SELECT 
+                articles.*, 
+                categories.name AS category_name, 
+                users.username AS author_name
+            FROM articles
+            INNER JOIN categories ON articles.category_id = categories.id
+            INNER JOIN users ON articles.author_id = users.id
+            WHERE articles.id = :id
         ";
-
-        $stmt = $this->getConnection()->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        print_r($articles);
-        foreach ($articles as &$article) {
-            $article['tags'] = $this->getTagsForArticle($article['id']);
-        }
-
-        return $articles;
-    }
-
-    public function createArticle($title, $slug, $content, $category_id, $tags) {
-        $data = [
-            'title' => $title,
-            'slug' => $slug,
-            'content' => $content,
-            'category_id' => $category_id,
-            
-        ];
-
-        $article_id = $this->insertRecord($this->table, $data);
-
-        if (!empty($tags)) {
-            $this->attachTagsToArticle($article_id, $tags);
-        }
-    }
-
-    private function getTagsForArticle($article_id) {
-        $sql = "
-            SELECT t.name AS tag_name
-            FROM tags t
-            JOIN article_tags at ON t.id = at.tag_id
-            WHERE at.article_id = :article_id
-        ";
-
-        $stmt = $this->getConnection()->prepare($sql);
-        $stmt->bindParam(':article_id', $article_id);
-        $stmt->execute();
-        $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return implode(', ', array_column($tags, 'tag_name'));
-    }
-
-    private function attachTagsToArticle($article_id, $tags) {
-        foreach ($tags as $tag_name) {
-            $tag_id = $this->getOrCreateTag($tag_name);
-            $this->insertRecord('article_tags', [
-                'article_id' => $article_id,
-                'tag_id' => $tag_id
-            ]);
-        }
-    }
-
-    private function getOrCreateTag($tag_name) {
-        $sql = "SELECT id FROM tags WHERE name = :tag_name";
-        $stmt = $this->getConnection()->prepare($sql);
-        $stmt->bindParam(':tag_name', $tag_name);
-        $stmt->execute();
-        $tag = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if ($tag) {
-            return $tag['id'];
-        }
-    
-        return $this->insertRecord('tags', ['name' => $tag_name]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
     
+
+    public function insertArticle($title, $slug, $content, $category_id, $status, $scheduled_date, $author_id)
+    {
+        $sql = "INSERT INTO articles (title, slug, content, category_id, status, scheduled_date, author_id)
+                VALUES (:title, :slug, :content, :category_id, :status, :scheduled_date, :author_id)";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':slug', $slug);
+        $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':category_id', $category_id);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':scheduled_date', $scheduled_date);
+        $stmt->bindParam(':author_id', $author_id);
+    
+        return $stmt->execute();
+    }
+    
+
+
+
+    public function updateArticle($id, $title, $slug, $content, $category_id, $status, $scheduled_date)
+{
+    $sql = "UPDATE articles
+            SET title = :title, slug = :slug, content = :content, category_id = :category_id, status = :status, scheduled_date = :scheduled_date
+            WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':title', $title);
+    $stmt->bindParam(':slug', $slug);
+    $stmt->bindParam(':content', $content);
+    $stmt->bindParam(':category_id', $category_id);
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':scheduled_date', $scheduled_date);
+
+    return $stmt->execute();
 }
+
+
+
+public function deleteArticle($id)
+{
+    $sql = "DELETE FROM articles WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    return $stmt->execute();
+}
+
+}
+?>
