@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             session_start();
             $_SESSION['user_id'] = 4; 
-            $_SESSION['username'] = 'admin';
             $_SESSION['role'] = 'admin';
             
             header("Location: /Dev-Blog/app/front-end/dashboard.php");
