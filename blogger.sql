@@ -76,7 +76,6 @@ CREATE TABLE `users` (
 
 --
 -- Dumping data for table `tags`
---
 
 INSERT INTO `tags` (`id`, `name`) VALUES
 
