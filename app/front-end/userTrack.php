@@ -109,19 +109,20 @@ try {
                                 <?php else: ?>
                                     <span class="text-gray-500 italic">No Picture</span>
                                 <?php endif; ?>
-                            </td>
+                            </td> 
                             <td class="px-4 py-2 text-center"><?php echo htmlspecialchars($user['role']); ?></td>
                             <td class="px-4 py-2 text-center">
 
                                  
-                                <form action="userTrack.php" method="POST" class="inline-block">
-                                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id']); ?>">
-                                    <select name="role" class="border rounded px-2 py-1 text-sm">
-                                        <option value="user" <?php echo $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
-                                        <option value="author" <?php echo $user['role'] === 'author' ? 'selected' : ''; ?>>Author</option>
-                                        <option value="admin" <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
-                                    </select>
-                                </form>
+                             <form action="userTrack.php" method="POST" class="inline-block">
+                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id']); ?>">
+                         <select name="role" class="border rounded px-2 py-1 text-sm" onchange="this.form.submit()">
+                    <option value="user" <?php echo $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
+                     <option value="author" <?php echo $user['role'] === 'author' ? 'selected' : ''; ?>>Author</option>
+                            <option value="admin" <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
+                     </select>
+              <input type="hidden" name="update_role" value="1">
+                    </form>
 
                                 <form action="userTrack.php" method="POST" class="inline-block">
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id']); ?>">
