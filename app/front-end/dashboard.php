@@ -34,7 +34,7 @@ require_once '../handler/d.php';
                     <li><a href="userTrack.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
                     <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
                     <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700">Tag</a></li>
-                    <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Article</a></li>
+                    <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Pending</a></li>
                 </ul>
             </nav>
             <div class="p-4">
