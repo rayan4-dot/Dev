@@ -41,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
-    $bio = $_POST['bio'] ?? ''; // Optional field
-    $profilePictureUrl = $_POST['profile_picture_url'] ?? ''; // Optional field
+    $bio = $_POST['bio'] ?? ''; 
+    $profilePictureUrl = $_POST['profile_picture_url'] ?? ''; 
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     try {
