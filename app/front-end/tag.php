@@ -29,11 +29,11 @@ require_once '../handler/t.php';
         <li><a href="userTrack.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
           <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
           <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Tag</a></li>
-          <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Article</a></li>
+          <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Pending</a></li>
         </ul>
       </nav>
       <form action="" method="POST">
-        <button type="submit" name="logout" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Logout</button>
+      <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
       </form>
       <div class="p-4 text-sm text-center">&copy; 2025 Dev-Blog</div>
     </aside>
@@ -51,7 +51,6 @@ require_once '../handler/t.php';
               Add Tag
             </button>
           </form>
-          <input type="text" placeholder="Search tags..." class="border border-gray-300 rounded px-4 py-2" />
         </div>
 
         <!-- Tags Table -->
