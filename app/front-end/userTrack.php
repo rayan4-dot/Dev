@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config/database.php';
 use App\Config\Database;
 
-$error_message = '';
+
 
 try {
     $db = new Database();
@@ -69,8 +69,8 @@ try {
                 </ul>
             </nav>
             <div class="p-4">
-                <form action="dashboard.php" method="POST">
-                    <button type="submit" name="logout" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Logout</button>
+                <form action="" method="POST">
+                <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
                 </form>
             </div>
             <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
