@@ -16,7 +16,7 @@ class Crud extends Database
         $sql = "INSERT INTO $table($columns) VALUES($placeholders)";
 
         try {
-            $stmt = $this->getConnection()->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql); 
 
             $stmt->execute(array_values($data));
 
@@ -36,7 +36,7 @@ class Crud extends Database
         }
 
         try {
-            $stmt = $this->getConnection()->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql); 
 
             if (!$stmt) {
                 error_log("Error preparing statement: " . implode(', ', $this->getConnection()->errorInfo()));
@@ -52,13 +52,10 @@ class Crud extends Database
             error_log("Error selecting records: " . $e->getMessage());
             return false;
         }
-        
     }
 
-    
     public function updateRecord(string $table, array $data, int $id)
     {
-
         $args = [];
         foreach ($data as $key => $value) {
             $args[] = "$key = ?";
@@ -67,37 +64,35 @@ class Crud extends Database
         $sql = "UPDATE $table SET " . implode(',', $args) . " WHERE id = ?";
 
         try {
-            $stmt = $this->getConnection()->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql); 
+
 
             if (!$stmt) {
-                error_log("error preparing statment: " . implode(', ', $this->getConnection()->errorInfo()));
+                error_log("error preparing statement: " . implode(', ', $this->getConnection()->errorInfo()));
                 return false;
             }
 
             return $stmt->execute(array_merge(array_values($data), [$id]));
-        } 
-        catch (PDOException $e) {
+        } catch (PDOException $e) {
             error_log("Error updating record: " . $e->getMessage());
             return false;
         }
     }
 
-    
     public function deleteRecord(string $table, int $id, string $column = 'id')
     {
         $sql = "DELETE FROM $table WHERE $column = ?";
 
         try {
-            $stmt = $this->getConnection()->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql); 
 
-            if(!$stmt) {
-                error_log("error preparing statment: " . implode(', ', $this->getConnection()->errorInfo()));
+            if (!$stmt) {
+                error_log("error preparing statement: " . implode(', ', $this->getConnection()->errorInfo()));
                 return false;
             }
 
             return $stmt->execute([$id]);
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             error_log("Error deleting record: " . $e->getMessage());
             return false;
         }
