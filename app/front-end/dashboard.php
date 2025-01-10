@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 //     header("Location: login.php");
 //     exit;
 
-// Include the Dashboard class
+
 require_once '../class/Dashboard/dashboard.php';
 require_once '../handler/d.php';
 ?>
