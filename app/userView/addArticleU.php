@@ -98,9 +98,10 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
         </form>
-        <a href="articleU.php">                     <button class=" bg-red-600 text-white px-6 py-2 rounded">Back</button>
-
-                </a>
+        <!-- Back Button -->
+        <a href="articleU.php">
+            <button class="bg-red-600 text-white px-6 py-2 rounded mt-4">Back</button>
+        </a>
     </div>
 </body>
 </html>
