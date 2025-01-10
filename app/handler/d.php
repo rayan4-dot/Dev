@@ -10,9 +10,12 @@ $database = new Database();
 $db = $database->getConnection();
 
 
-$dashboard = new Dashboard();
+
+$dashboard = new Dashboard($db);
 
 
 $totalUsers = $dashboard->getTotalUsers();
 $totalArticles = $dashboard->getTotalArticles();
 $totalCategories = $dashboard->getTotalCategories();
+$recentArticles = $dashboard->getRecentArticles(3); 
+$topAuthors = $dashboard->getTopAuthors(3);        
