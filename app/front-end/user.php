@@ -85,4 +85,8 @@ if (!$userData) {
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 20ba770 (Committing local changes before pulling from remote)
