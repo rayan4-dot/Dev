@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../config/database.php';
 use App\Config\Database;
 
-
 class User
 {
     private $conn;
@@ -23,24 +22,27 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function registerUser($username, $email, $passwordHash)
+    public function registerUser($username, $email, $passwordHash, $bio, $profilePictureUrl)
     {
-        $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (:username, :email, :password_hash, :role)";
+        $sql = "INSERT INTO users (username, email, password_hash, role, bio, profile_picture_url) 
+                VALUES (:username, :email, :password_hash, :role, :bio, :profile_picture_url)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password_hash', $passwordHash);
-        $stmt->bindValue(':role', 'user'); 
+        $stmt->bindValue(':role', 'user');
+        $stmt->bindParam(':bio', $bio);
+        $stmt->bindParam(':profile_picture_url', $profilePictureUrl);
         return $stmt->execute();
     }
 }
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
+    $bio = $_POST['bio'] ?? ''; // Optional field
+    $profilePictureUrl = $_POST['profile_picture_url'] ?? ''; // Optional field
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     try {
@@ -50,12 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $user = new User($conn);
 
-
         if ($user->isEmailOrUsernameTaken($username, $email)) {
-            $error_message = "email or username already taken";
+            $error_message = "Email or username already taken";
         } else {
 
-            if ($user->registerUser($username, $email, $password_hash)) {
+            if ($user->registerUser($username, $email, $password_hash, $bio, $profilePictureUrl)) {
                 $success_message = "Registered successfully";
             } else {
                 $error_message = "Error, Try again.";
@@ -101,6 +102,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
                 <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+                <textarea id="bio" name="bio" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="profile_picture_url" class="block text-sm font-medium text-gray-700">Profile Picture URL (CDN)</label>
+                <input type="text" id="profile_picture_url" name="profile_picture_url" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Register</button>
         </form>
