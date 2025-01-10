@@ -47,8 +47,8 @@ if(isset($_POST['update-tag']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
             </nav>
             <div class="p-4">
-                <a href="app/auth/login.php">
-                    <button class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Logout</button>
+                <a href="tag.php">
+                    <button class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Back</button>
                 </a>
             </div>
             <div class="p-4 text-sm text-center">&copy; 2025 Dashboard</div>
