@@ -12,6 +12,25 @@ class Article
         $this->conn = (new Database())->getConnection(); 
     }
 
+    public function insertArticle($title, $slug, $content, $category_id, $status, $scheduled_date, $author_id)
+    {
+
+        $sql = "INSERT INTO articles (title, slug, content, category_id, status, scheduled_date, author_id)
+                VALUES (:title, :slug, :content, :category_id, :status, :scheduled_date, :author_id)";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':slug', $slug);
+        $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':category_id', $category_id);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':scheduled_date', $scheduled_date);
+        $stmt->bindParam(':author_id', $author_id);
+    
+        return $stmt->execute(); 
+    }
+
+    
     public function getAllArticles()
     {
         $sql = "SELECT * FROM articles WHERE status = 'published' ORDER BY created_at DESC";
@@ -40,22 +59,7 @@ class Article
     }
     
 
-    public function insertArticle($title, $slug, $content, $category_id, $status, $scheduled_date, $author_id)
-    {
-        $sql = "INSERT INTO articles (title, slug, content, category_id, status, scheduled_date, author_id)
-                VALUES (:title, :slug, :content, :category_id, :status, :scheduled_date, :author_id)";
-        
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':slug', $slug);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':category_id', $category_id);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':scheduled_date', $scheduled_date);
-        $stmt->bindParam(':author_id', $author_id);
-    
-        return $stmt->execute();
-    }
+
     
 
 
