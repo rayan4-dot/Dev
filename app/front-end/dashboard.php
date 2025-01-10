@@ -9,12 +9,9 @@ ini_set('display_errors', 1);
 // Include the Dashboard class
 require_once '../class/Dashboard/dashboard.php';
 require_once '../handler/d.php';
+?>
 
-
- ?>
-
-
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,8 +23,8 @@ require_once '../handler/d.php';
 <body class="bg-gray-100 h-screen">
     <div class="flex h-full">
         <!-- Sidebar -->
-        <aside class="w-64 bg-blue-900 text-white flex flex-col">
-            <div class="p-4 text-xl font-bold">Admin</div>
+        <aside class="w-56 bg-blue-900 text-white flex flex-col shadow-md lg:w-64 xl:w-75">
+            <div class="p-4 text-xl font-bold text-center">Admin</div>
             <nav class="flex-1">
                 <ul class="space-y-2">
                     <li><a href="dashboard.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Home</a></li>
@@ -37,23 +34,24 @@ require_once '../handler/d.php';
                     <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Pending</a></li>
                 </ul>
             </nav>
-            <div class="p-4">
+            <div class="p-4 mt-auto">
                 <form action="dashboard.php" method="POST">
-                    <button type="submit" name="logout" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Logout</button>
+                <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
                 </form>
             </div>
             <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
         </aside>
 
+
         <!-- Main Content -->
-        <main class="flex-1 p-6">
+        <main class="flex-1 p-6 overflow-auto">
             <!-- Welcome Section -->
             <div class="bg-white shadow-md rounded-lg p-4 mb-6">
                 <h2 class="text-2xl font-bold">Dashboard</h2>
             </div>
 
             <!-- Summary Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
                     <h3 class="text-lg font-bold">Total Users</h3>
                     <p class="text-3xl font-bold"><?php echo $totalUsers; ?></p>
@@ -69,7 +67,7 @@ require_once '../handler/d.php';
             </div>
 
             <!-- Charts Section -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="bg-white p-4 rounded-lg shadow-md">
                     <h3 class="text-lg font-bold mb-4">User Growth</h3>
                     <canvas id="userChart"></canvas>
@@ -79,6 +77,40 @@ require_once '../handler/d.php';
                     <canvas id="articleChart"></canvas>
                 </div>
             </div>
+
+            <!-- Recent Articles -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Recent Articles</h3>
+    <ul class="space-y-3">
+        <?php foreach ($recentArticles as $article): ?>
+            <li class="flex items-center justify-between p-2 border-b hover:bg-gray-50 cursor-pointer">
+                <div class="font-medium text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
+                <a href="articleDetail.php?id=<?= $articleItem['id'] ?>" class="text-blue-600"><button>Read more</button></a>
+                <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?>
+            </div>      
+
+
+                        
+            
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+
+
+            <!-- Top Authors -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Top Authors</h3>
+                <ul class="space-y-3">
+                    <?php foreach ($topAuthors as $author): ?>
+                        <li class="flex items-center justify-between p-2 border-b hover:bg-gray-50 cursor-pointer">
+                            <div class="font-medium text-gray-800"><?= htmlspecialchars($author['author_name']) ?></div>
+                            <div class="text-sm text-gray-500">Articles: <?= htmlspecialchars($author['article_count']) ?></div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
         </main>
     </div>
 
