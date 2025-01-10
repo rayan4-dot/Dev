@@ -29,7 +29,7 @@ try {
         exit;
     }
 
-    // Handle user deletion
+    // handle user deletion
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
         $userId = $_POST['user_id'];
 
