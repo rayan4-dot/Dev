@@ -1,4 +1,3 @@
-
 <?php
 
 error_reporting(E_ALL);
@@ -25,6 +24,33 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Dev-Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Hero Section Animation */
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            animation: slideUp 1s ease-out;
+            color: #ffffff; /* Solid white color for better readability */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); /* Improved text shadow for contrast */
+            letter-spacing: 2px;
+            text-transform: uppercase; /* Make the title more prominent */
+        }
+
+        .hero-text {
+            animation: slideUp 1.2s ease-out;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #ffffff; /* White color for better contrast */
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4); /* Text shadow for better visibility */
+        }
 
         .article-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -63,10 +89,15 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </nav>
 
-    <!-- Hero Section (optional) -->
-    <section class="bg-blue-800 text-white py-16 text-center">
-        <h1 class="text-4xl font-bold mb-4">Welcome to Dev-Blog</h1>
-        <p class="text-lg">Stay updated with the latest articles on technology, programming, and more!</p>
+    <!-- Hero Section with Background Image, Gradient, and Animation -->
+    <section class="relative bg-cover bg-center text-white py-32 text-center" style="background-image: url('blog.webp'); min-height: 400px;">
+        <!-- Dark gradient overlay for improved readability -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50"></div>
+        
+        <div class="relative z-10 px-4 sm:px-8 py-16">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4 hero-title">Welcome to Dev-Blog</h1>
+            <p class="text-lg sm:text-xl hero-text">Stay updated with the latest articles on technology, programming, and more!</p>
+        </div>
     </section>
 
     <!-- Main Content -->
