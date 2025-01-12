@@ -9,7 +9,13 @@ ini_set('display_errors', 1);
 
 require_once '../class/Dashboard/dashboard.php';
 require_once '../handler/d.php';
+
+// $recentArticles = $article->getAllArticles();
+// var_dump($recentArticles);
+
 ?>
+
+
 
 <!DOCTYPE html>  
 <html lang="en">
@@ -19,92 +25,131 @@ require_once '../handler/d.php';
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom CSS for smooth animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* .hover-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+
+        .button-transition {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button-transition:hover {
+            transform: translateY(-2px);
+            background-color: #2563eb;
+        } */
+    </style>
 </head>
 <body class="bg-gray-100 h-screen">
+
     <div class="flex h-full">
         <!-- Sidebar -->
         <aside class="w-56 bg-blue-900 text-white flex flex-col shadow-md lg:w-64 xl:w-75">
-            <div class="p-4 text-xl font-bold text-center">Admin</div>
+            <div class="p-6 text-xl font-bold text-center">Admin Dashboard</div>
             <nav class="flex-1">
-                <ul class="space-y-2">
-                    <li><a href="dashboard.php" class="block px-4 py-2 hover:bg-blue-700 font-bold">Home</a></li>
-                    <li><a href="userTrack.php" class="block px-4 py-2 hover:bg-blue-700">Users</a></li>
-                    <li><a href="category.php" class="block px-4 py-2 hover:bg-blue-700">Category</a></li>
-                    <li><a href="tag.php" class="block px-4 py-2 hover:bg-blue-700">Tag</a></li>
-                    <li><a href="article.php" class="block px-4 py-2 hover:bg-blue-700">Pending</a></li>
+                <ul class="space-y-4">
+                    <li><a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Home</a></li>
+                    <li><a href="userTrack.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Users</a></li>
+                    <li><a href="category.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Category</a></li>
+                    <li><a href="tag.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Tag</a></li>
+                    <li><a href="adminArticles.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Manage Articles</a></li>
+                    <li><a href="approveArticles.php" class="block px-6 py-3 hover:bg-blue-700 font-semibold transition-colors">Pending</a></li>
+
                 </ul>
             </nav>
-            <div class="p-4 mt-auto">
+            <div class="p-6 mt-auto">
                 <form action="dashboard.php" method="POST">
-                <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
+                    <a href="../auth/logout.php" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">Logout</a>
                 </form>
             </div>
-            <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
+            <div class="p-4 text-sm text-center mt-8">&copy; <span id="year"></span> Dev-Blog</div>
         </aside>
 
-
         <!-- Main Content -->
-        <main class="flex-1 p-6 overflow-auto">
+        <main class="flex-1 p-8 overflow-auto fade-in">
             <!-- Welcome Section -->
-            <div class="bg-white shadow-md rounded-lg p-4 mb-6">
-                <h2 class="text-2xl font-bold">Dashboard</h2>
+            <div class="bg-white shadow-xl rounded-lg p-8 mb-10 hover-card transition-all">
+                <h2 class="text-3xl font-bold text-gray-800">Welcome Boss</h2>
             </div>
 
             <!-- Summary Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-                    <h3 class="text-lg font-bold">Total Users</h3>
-                    <p class="text-3xl font-bold"><?php echo $totalUsers; ?></p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                <div class="bg-blue-500 text-white p-8 rounded-xl shadow-lg hover-card transition-all">
+                    <h3 class="text-xl font-semibold">Total Users</h3>
+                    <p class="text-4xl font-bold"><?php echo $totalUsers; ?></p>
                 </div>
-                <div class="bg-green-500 text-white p-4 rounded-lg shadow-md">
-                    <h3 class="text-lg font-bold">Total Articles</h3>
-                    <p class="text-3xl font-bold"><?php echo $totalArticles; ?></p>
+                <div class="bg-green-500 text-white p-8 rounded-xl shadow-lg hover-card transition-all">
+                    <h3 class="text-xl font-semibold">Total Articles</h3>
+                    <p class="text-4xl font-bold"><?php echo $totalArticles; ?></p>
                 </div>
-                <div class="bg-yellow-500 text-white p-4 rounded-lg shadow-md">
-                    <h3 class="text-lg font-bold">Categories</h3>
-                    <p class="text-3xl font-bold"><?php echo $totalCategories; ?></p>
+                <div class="bg-yellow-500 text-white p-8 rounded-xl shadow-lg hover-card transition-all">
+                    <h3 class="text-xl font-semibold">Categories</h3>
+                    <p class="text-4xl font-bold"><?php echo $totalCategories; ?></p>
                 </div>
             </div>
 
             <!-- Charts Section -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-white p-4 rounded-lg shadow-md">
-                    <h3 class="text-lg font-bold mb-4">User Growth</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+                <div class="bg-white p-8 rounded-xl shadow-lg hover-card transition-all">
+                    <h3 class="text-xl font-semibold mb-4">User Growth</h3>
                     <canvas id="userChart"></canvas>
                 </div>
-                <div class="bg-white p-4 rounded-lg shadow-md">
-                    <h3 class="text-lg font-bold mb-4">Article Statistics</h3>
+                <div class="bg-white p-8 rounded-xl shadow-lg hover-card transition-all">
+                    <h3 class="text-xl font-semibold mb-4">Article Statistics</h3>
                     <canvas id="articleChart"></canvas>
                 </div>
             </div>
 
-            <!-- Recent Articles -->
-            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-    <h3 class="text-xl font-semibold text-gray-700 mb-4">Recent Articles</h3>
-    <ul class="space-y-3">
-        <?php foreach ($recentArticles as $article): ?>
-            <li class="flex items-center justify-between p-2 border-b hover:bg-gray-50 cursor-pointer">
-                <div class="font-medium text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
-                <a href="articleDetail.php?id=<?= $articleItem['id'] ?>" class="text-blue-600"><button>Read more</button></a>
-                <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?>
-            </div>      
+            <!-- Recent Articles Section -->
+            <div class="bg-white p-8 rounded-xl shadow-lg mb-10 hover-card transition-all">
+                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Recent Articles</h3>
+
+                <a href="../userView/articleDetail.php?id=<?= $recentArticles[0]['id'] ?>" 
+                class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300"><button>Manage articles</button></a> 
+                
+                <ul class="space-y-4">
+                    <?php foreach ($recentArticles as $article): ?>
+                        <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
+                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
+
+                            <a href="../userView/articleDetail.php?id=<?= $article['id'] ?>" 
+   class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">Read More</a>
 
 
-                        
-            
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+                            
+                            <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?></div>      
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
 
-
-            <!-- Top Authors -->
-            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4">Top Authors</h3>
-                <ul class="space-y-3">
+            <!-- Top Authors Section -->
+            <div class="bg-white p-8 rounded-xl shadow-lg mb-10 hover-card transition-all">
+                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Top Authors</h3>
+                <ul class="space-y-4">
                     <?php foreach ($topAuthors as $author): ?>
-                        <li class="flex items-center justify-between p-2 border-b hover:bg-gray-50 cursor-pointer">
-                            <div class="font-medium text-gray-800"><?= htmlspecialchars($author['author_name']) ?></div>
+                        <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
+                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($author['author_name']) ?></div>
                             <div class="text-sm text-gray-500">Articles: <?= htmlspecialchars($author['article_count']) ?></div>
                         </li>
                     <?php endforeach; ?>
