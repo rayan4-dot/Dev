@@ -3,33 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-
 require_once __DIR__ . '/../config/database.php';
 
-$username = $_SESSION['username'];
-use App\Config\Database;
+require_once '../handler/u.php';
 
-$db = new Database();
-$conn = $db->getConnection();  
-
-
-if (!$conn) {
-    die("Database connection failed.");
-}
-
-$sql = "SELECT username, bio, profile_picture_url FROM users WHERE username = :username";
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(':username', $username);
-$stmt->execute();
-$userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$userData) {
-
-    $error_message = "User not found.";
-}
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,8 +30,8 @@ if (!$userData) {
                 </ul>
             </nav>
             <div class="mt-8 text-center">
-                    <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
-                </div>
+                <a href="../auth/logout.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
+            </div>
             <div class="p-4 text-sm text-center">&copy; <span id="year"></span> Dev-Blog</div>
         </aside>
 
@@ -66,27 +45,63 @@ if (!$userData) {
                         <div class="w-full max-w-md text-center">
                             <p class="text-lg text-gray-700"><?php echo htmlspecialchars($userData['bio']); ?></p>
                         </div>
+                        <button onclick="toggleModal()" class="mt-4 px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-300">Edit Profile</button>
                     </div>
                 <?php else: ?>
                     <div class="text-center text-gray-500 mt-4">
                         <p>No profile data available. Please update your bio and profile picture.</p>
                     </div>
                 <?php endif; ?>
-
-                <!-- Logout button -->
-
-
             </div>
         </main>
     </div>
 
+    <!-- Modal for Editing Profile -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 opacity-0 transition-opacity duration-500 ease-out transform translate-y-10 scale-95 transition-transform duration-300">
+    <div class="bg-white p-6 rounded-lg shadow-xl w-96 transform transition-transform duration-300 ease-out">
+        <h3 class="text-2xl font-semibold text-center text-blue-900 mb-6">Edit Profile</h3>
+        <form action="update_profile.php" method="POST">
+            <!-- Username -->
+            <div class="mb-4">
+                <label for="username" class="block text-sm text-gray-600">Username</label>
+                <input type="text" name="username" id="username" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" value="<?= htmlspecialchars($userData['username']) ?>" required>
+            </div>
+
+            <!-- Bio -->
+            <div class="mb-4">
+                <label for="bio" class="block text-sm text-gray-600">Bio</label>
+                <textarea name="bio" id="bio" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" rows="4" required><?= htmlspecialchars($userData['bio']) ?></textarea>
+            </div>
+
+            <!-- Profile Picture URL -->
+            <div class="mb-4">
+                <label for="profile_picture" class="block text-sm text-gray-600">Profile Picture URL</label>
+                <input type="text" name="profile_picture_url" id="profile_picture" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" value="<?= htmlspecialchars($userData['profile_picture_url']) ?>" placeholder="Enter URL of your profile picture" required>
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button type="button" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200" onclick="toggleModal()">Cancel</button>
+                <button type="submit" name="update_profile" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
     <script>
         // set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toggle the modal visibility
+        function toggleModal() {
+        const modal = document.getElementById('editModal');
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('opacity-0');
+        modal.classList.toggle('opacity-100');
+        modal.classList.toggle('translate-y-10');
+        modal.classList.toggle('translate-y-0');
+        modal.classList.toggle('scale-95');
+        modal.classList.toggle('scale-100');
+    }
     </script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 20ba770 (Committing local changes before pulling from remote)
