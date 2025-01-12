@@ -126,7 +126,7 @@ try {
 
                                 <form action="userTrack.php" method="POST" class="inline-block">
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id']); ?>">
-                                    <button type="submit" name="delete_user" class="bg-red-500 text-white px-2 py-1 rounded text-sm">Delete</button>
+                                    <button type="submit" name="delete_user" class="bg-red-500 text-white px-2 py-1 rounded text-sm">Sanction</button>
                                 </form>
                             </td>
                         </tr>
