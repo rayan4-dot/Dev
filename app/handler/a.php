@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tags = $_POST['tags'] ?? []; 
 
 
-    $article->createArticle($title, $slug, $content, $category_id, $tags);
 
 
     header("Location: article.php");
