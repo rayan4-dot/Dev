@@ -14,12 +14,12 @@ class Article
 
     public function insertArticle($title, $slug, $content, $category_id, $status, $scheduled_date, $author_id, $tags)
     {
-        // List of valid status values
+
         $validStatuses = ['draft', 'published', 'scheduled', 'pending'];
     
-        // Check if the status provided is valid
+
         if (!in_array($status, $validStatuses)) {
-            // Default to 'pending' if an invalid status is provided
+
             $status = 'pending';
         }
     
@@ -39,9 +39,9 @@ class Article
     
     public function disapproveArticle($id)
     {
-        $status = 'pending';  // Set status to 'pending' for disapproval
+        $status = 'pending';  
     
-        // Make sure this query is correct
+
         $sql = "UPDATE articles SET status = :status WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':status', $status);
@@ -61,18 +61,18 @@ class Article
 
 public function approveArticle($id)
 {
-    // Define the status as 'published'
+
     $status = 'published';
 
-    // Prepare the SQL statement to update the article's status
+
     $sql = "UPDATE articles SET status = :status WHERE id = :id";
     $stmt = $this->conn->prepare($sql);
 
-    // Bind the parameters to the prepared statement
+
     $stmt->bindParam(':status', $status);
     $stmt->bindParam(':id', $id);
 
-    // Execute the statement and return the result (true or false)
+
     return $stmt->execute();
 }
 
