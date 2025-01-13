@@ -14,9 +14,6 @@ require_once '../handler/d.php';
 // var_dump($recentArticles);
 
 ?>
-
-
-
 <!DOCTYPE html>  
 <html lang="en">
 <head>
@@ -43,21 +40,18 @@ require_once '../handler/d.php';
             }
         }
 
-
-        /* .hover-card:hover {
+        /* Enhanced Welcome Card Hover */
+        .hover-welcome:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-
-        .button-transition {
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        /* Gradient Text Effect */
+        .gradient-text {
+            background: linear-gradient(to right, #6ee7b7, #3b82f6);
+            -webkit-background-clip: text;
+            color: transparent;
         }
-
-        .button-transition:hover {
-            transform: translateY(-2px);
-            background-color: #2563eb;
-        } */
     </style>
 </head>
 <body class="bg-gray-100 h-screen">
@@ -87,9 +81,10 @@ require_once '../handler/d.php';
 
         <!-- Main Content -->
         <main class="flex-1 p-8 overflow-auto fade-in">
-            <!-- Welcome Section -->
-            <div class="bg-white shadow-xl rounded-lg p-8 mb-10 hover-card transition-all">
-                <h2 class="text-3xl font-bold text-gray-800">Welcome Boss</h2>
+            <!-- Enhanced Welcome Section -->
+            <div class="bg-gradient-to-r from-indigo-600 to-pink-600 text-white shadow-xl rounded-lg p-8 mb-10 hover-welcome transition-all transform hover:scale-105">
+                <h2 class="text-4xl font-extrabold gradient-text">Welcome, Boss!</h2>
+                <p class="text-lg font-medium mt-4">Ready to manage your blog? Let’s get started!</p>
             </div>
 
             <!-- Summary Cards -->
@@ -119,38 +114,37 @@ require_once '../handler/d.php';
                     <canvas id="articleChart"></canvas>
                 </div>
             </div>
+<!-- Recent Articles Section -->
+<div class="bg-white p-8 rounded-2xl shadow-lg mb-10 hover:shadow-2xl transition-all hover:transform hover:scale-105">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Recent Articles</h3>
+    
+    <ul class="space-y-6">
+        <?php foreach ($recentArticles as $article): ?>
+            <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 transition-all rounded-lg cursor-pointer transform hover:scale-105 hover:shadow-lg">
+                <div class="font-medium text-lg text-gray-800 hover:text-blue-600 transition-colors">
+                    <?= htmlspecialchars($article['title']) ?>
+                </div>
+                <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?></div>      
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 
-            <!-- Recent Articles Section -->
-            <div class="bg-white p-8 rounded-xl shadow-lg mb-10 hover-card transition-all">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Recent Articles</h3> 
-                
-                <ul class="space-y-4">
-                    <?php foreach ($recentArticles as $article): ?>
-                        <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
-                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
+<!-- Top Authors Section -->
+<div class="bg-white p-8 rounded-2xl shadow-lg mb-10 hover:shadow-2xl transition-all hover:transform hover:scale-105">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Top Authors</h3>
+    <ul class="space-y-6">
+        <?php foreach ($topAuthors as $author): ?>
+            <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 transition-all rounded-lg cursor-pointer transform hover:scale-105 hover:shadow-lg">
+                <div class="font-medium text-lg text-gray-800 hover:text-blue-600 transition-colors">
+                    <?= htmlspecialchars($author['author_name']) ?>
+                </div>
+                <div class="text-sm text-gray-500">Articles: <?= htmlspecialchars($author['article_count']) ?></div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 
-                            
-                            <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?></div>      
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <!-- Top Authors Section -->
-            <div class="bg-white p-8 rounded-xl shadow-lg mb-10 hover-card transition-all">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Top Authors</h3>
-                <ul class="space-y-4">
-                    <?php foreach ($topAuthors as $author): ?>
-                        <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
-                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($author['author_name']) ?></div>
-                            <div class="text-sm text-gray-500">Articles: <?= htmlspecialchars($author['article_count']) ?></div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-        </main>
-    </div>
 
     <script>
         // Set dynamic year in footer
