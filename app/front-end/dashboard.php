@@ -122,14 +122,14 @@ require_once '../handler/d.php';
 
             <!-- Recent Articles Section -->
             <div class="bg-white p-8 rounded-xl shadow-lg mb-10 hover-card transition-all">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Recent Articles</h3>
-
-                <a href="../userView/articleDetail.php?id=<?= $recentArticles[0]['id'] ?>" 
-                class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300"><button>Manage articles</button></a> 
+                <h3 class="text-2xl font-semibold text-gray-700 mb-6">Recent Articles</h3> 
                 
                 <ul class="space-y-4">
                     <?php foreach ($recentArticles as $article): ?>
                         <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
+                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
+
+                            
                             <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?></div>      
                         </li>
                     <?php endforeach; ?>
