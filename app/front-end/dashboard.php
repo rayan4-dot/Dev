@@ -130,13 +130,6 @@ require_once '../handler/d.php';
                 <ul class="space-y-4">
                     <?php foreach ($recentArticles as $article): ?>
                         <li class="flex items-center justify-between p-6 border-b hover:bg-gray-50 cursor-pointer transition-all">
-                            <div class="font-medium text-lg text-gray-800"><?= htmlspecialchars($article['title']) ?></div>
-
-                            <a href="../userView/articleDetail.php?id=<?= $article['id'] ?>" 
-   class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">Read More</a>
-
-
-                            
                             <div class="text-sm text-gray-500"><?= date('F j, Y', strtotime($article['created_at'])) ?></div>      
                         </li>
                     <?php endforeach; ?>
