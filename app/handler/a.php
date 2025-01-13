@@ -12,10 +12,10 @@ $db = $database->getConnection();
 
 $article = new Article($db);
 $category = new Category($db);
+$tag = new Tag($db);
+
 
 $categories = $category->getAllCat();
-
-$tag = new Tag($db);
 $tags = $tag->display(); 
 
 

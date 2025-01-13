@@ -5,3 +5,7 @@
 app/.DS_STORE
 
 app/class/.DS_STORE
+
+git add vendor
+
+# /vendor/
