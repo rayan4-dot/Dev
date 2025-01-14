@@ -38,11 +38,6 @@ class Crud extends Database
         try {
             $stmt = $this->getConnection()->prepare($sql); 
 
-            if (!$stmt) {
-                error_log("Error preparing statement: " . implode(', ', $this->getConnection()->errorInfo()));
-                return false;
-            }
-
             if ($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
