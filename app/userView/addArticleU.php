@@ -17,12 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add-article'])) {
     $slug = $_POST['slug'];
     $content = $_POST['content'];
     $category_id = $_POST['category_id'];
-    $status = 'pending';  // Default status set to 'pending'
+    $status = 'pending';  
     $scheduled_date = $_POST['scheduled_date'];
     $author_id = $_SESSION['user_id'];
-    $tags = isset($_POST['tags']) ? $_POST['tags'] : [];  // Collect selected tags
+    $tags = isset($_POST['tags']) ? $_POST['tags'] : [];  
 
-    // Insert the article using the Article class
+
     if ($article->insertArticle($title, $slug, $content, $category_id, $status, $scheduled_date, $author_id, $tags)) {
         header("Location: articleU.php"); 
         exit();
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add-article'])) {
     }
 }
 
-// Fetch categories for the category dropdown
+
 $db = new Database();
 $conn = $db->getConnection();
 $sqlCategories = "SELECT id, name FROM categories";  
@@ -39,7 +39,7 @@ $stmtCategories = $conn->prepare($sqlCategories);
 $stmtCategories->execute();
 $categories = $stmtCategories->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch tags for the tag checkboxes
+
 $sqlTags = "SELECT id, name FROM tags";  
 $stmtTags = $conn->prepare($sqlTags);
 $stmtTags->execute();
